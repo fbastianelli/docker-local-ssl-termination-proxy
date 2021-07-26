@@ -6,7 +6,7 @@ ENV NGINX_VERSION 1.13.5
 
 RUN apk add --no-cache openssl nginx gettext \
     && mkdir -p /etc/nginx/ssl/ \
-    && openssl req -new -x509 -sha256 -newkey rsa:2048 -days 365 -nodes -out /etc/nginx/ssl/nginx.pem -keyout /etc/nginx/ssl/nginx.key -subj "/C=JP/ST=MyState/L=MyLocality/O=MyOrg/OU=dev/CN=localhost" \
+    && openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=mydomain.com" -addext "subjectAltName=DNS:mydomain.com" -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx-selfsigned.key -out /etc/nginx/ssl/nginx-selfsigned.crt; \
     && mkdir -p /run/nginx/
 
 COPY nginx.conf.template /etc/nginx/nginx.conf.template
